@@ -20,7 +20,7 @@ const userCtrl = {
         name,
         email,
         password: hashedPassword,
-        role: "user",  
+        role,
       });
 
       await newUser.save();

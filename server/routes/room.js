@@ -4,6 +4,7 @@ const authAdmin = require('../middleware/adminAuth');
 const router = express.Router();
 
 router.post("/create", authAdmin, roomCtrl.createRoom)
+router.put("/update", authAdmin, roomCtrl.updateRoom)
 
 
-module.exports = router
+module.exports = router  
