@@ -5,7 +5,7 @@ const roomCtrl = {
     const { owner, location, price, amenities, available } = req.body;
     try {
       const newRoom = new Room({
-        owner:owner,
+        owner,
         location,
         price,
         amenities,
@@ -19,26 +19,35 @@ const roomCtrl = {
   },
   updateRoom: async (req, res) => {
     const { owner, location, price, amenities, available } = req.body;
-      try {
-        await Room.findOneAndUpdate(
-            {
-              _id: req.params.id,
-            },
-            {
-              owner,
-              location,
-              price,
-              amenities,
-              available,
-            }
-            );
-            res.json({ msg: "Room updated successfully" }); 
-        
-      } catch (error) {
-          
-          res.status(400).json({ msg: error.message });
-        
+    const roomId = req.params.id;
+
+    console.log(`Updating room with ID: ${roomId}`);
+    console.log(`Update details: ${JSON.stringify(req.body)}`);
+    
+    try {
+      const updatedRoom = await Room.findOneAndUpdate(
+        { _id: roomId },
+        {
+          owner,
+          location,
+          price,
+          amenities,
+          available,
+        },
+        { new: true }
+      );
+
+      if (!updatedRoom) {
+        console.log(`Room with ID: ${roomId} not found.`);
+        return res.status(404).json({ msg: "Room not found" });
       }
+
+      console.log(`Room updated: ${JSON.stringify(updatedRoom)}`);
+      res.json({ msg: "Room updated successfully", updatedRoom });
+    } catch (error) {
+      console.error(`Error updating room: ${error.message}`);
+      res.status(400).json({ msg: error.message });
+    }
   },
 };
 
