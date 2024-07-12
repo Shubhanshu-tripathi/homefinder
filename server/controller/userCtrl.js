@@ -46,7 +46,7 @@ const userCtrl = {
       if (!rf_token)
         return res.status(400).json({ msg: "Please Login or Registers" });
 
-      jwt.verify(rf_token, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
+      jwt.verify(rf_token, process.env.REFRESH_TOKEN, (err, user) => {
         if (err)
           return res.status(400).json({ msg: "Please Login or Register" });
         const accesstoken = createAccessToken({ id: user.id });
@@ -111,6 +111,7 @@ const userCtrl = {
     }
   },
 };
+
 
 const createAccessToken = (payload) => {
   return jwt.sign(payload, process.env.ACCESS_TOKEN, { expiresIn: "1d" });
