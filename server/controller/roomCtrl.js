@@ -5,7 +5,7 @@ const roomCtrl = {
     const { owner, location, price, amenities, available } = req.body;
     try {
       const newRoom = new Room({
-        owner: owner,
+        owner:owner,
         location,
         price,
         amenities,
