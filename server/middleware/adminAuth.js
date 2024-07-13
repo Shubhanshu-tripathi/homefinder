@@ -9,7 +9,7 @@ const authAdmin = (req, res, next) => {
         jwt.verify(token, process.env.ACCESS_TOKEN, (err, user) => {
             if (err) return res.status(403).json({ msg: "Token verification failed" });
 
-            console.log('Decoded user:', user); // Add this line for debugging
+            
 
             req.user = user;
             if (user.role !== 'admin') {

@@ -57,6 +57,20 @@ const roomCtrl = {
       res.status(500).json({ msg: error.message });
     }
   },
+  getRoom: async (req, res) => { 
+
+    try {
+              
+      const room = Room.findById(req.params.id);
+      if (!room) return res.status(404).json({ msg: "Room not found" });
+
+    } catch (error) {
+         
+      res.status(500).json({ msg: error.message });
+              
+            }
+  }
+    
 };
 
 module.exports = roomCtrl;
