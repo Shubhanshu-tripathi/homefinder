@@ -23,7 +23,7 @@ const roomCtrl = {
 
     console.log(`Updating room with ID: ${roomId}`);
     console.log(`Update details: ${JSON.stringify(req.body)}`);
-    
+
     try {
       const updatedRoom = await Room.findOneAndUpdate(
         { _id: roomId },
@@ -47,6 +47,14 @@ const roomCtrl = {
     } catch (error) {
       console.error(`Error updating room: ${error.message}`);
       res.status(400).json({ msg: error.message });
+    }
+  },
+  deleteRoom: async (req, res) => {
+    try {
+      await Room.findOneAndDelete(req.params.id);
+      res.json({ msg: "Deleted a Product" });
+    } catch (error) {
+      res.status(500).json({ msg: error.message });
     }
   },
 };
