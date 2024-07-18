@@ -7,9 +7,9 @@ const roomCtrl = {
       const newRoom = new Room({
         owner,
         location,
-        price,
+        price, 
         amenities,
-        available,
+        available,   
       });
       await newRoom.save();
       res.json(newRoom);
