@@ -13,5 +13,6 @@ app.listen(PORT, () => {
 })
 
 app.use("/user", require("./routes/user"))
-app.use("/room",require("./routes/room"))
+app.use("/room", require("./routes/room"))
+app.use("/book", require("./routes/book"))
 
