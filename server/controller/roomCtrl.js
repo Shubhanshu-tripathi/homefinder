@@ -12,9 +12,9 @@ const roomCtrl = {
         available,   
       });
       await newRoom.save();
-      res.json(newRoom);
+      return res.status(201).json({ message: 'Room created successfully', room: newRoom });
     } catch (error) {
-      res.status(400).json({ msg: error.message });
+      return res.status(500).json({ message: 'Error creating room', error: error.message });
     }
   },
   updateRoom: async (req, res) => {
@@ -61,7 +61,7 @@ const roomCtrl = {
 
     try {
               
-      const room = Room.findById(req.params.id);
+      const room =  await Room.findById(req.params.id);
       if (!room) return res.status(404).json({ msg: "Room not found" });
 
     } catch (error) {
@@ -69,7 +69,18 @@ const roomCtrl = {
       res.status(500).json({ msg: error.message });
               
             }
-  }
+  },
+  getRoomsByOwner: async (req, res) => {
+    const ownerId = req.params.ownerId;
+    try {
+        const rooms = await Room.find({ owner: ownerId });
+        if (rooms.length === 0) return res.status(404).json({ msg: "No rooms found for this owner" });
+        res.json(rooms);
+    } catch (error) {
+        res.status(500).json({ msg: error.message });
+    }
+}
+
     
 };
 

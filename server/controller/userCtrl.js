@@ -2,6 +2,7 @@ const User = require("../models/user");
 const bcrypt = require("bcrypt");
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
+const sendEmail = require("../utils/nodemailer");
  
 const userCtrl = {
   register: async (req, res) => {
@@ -29,7 +30,7 @@ const userCtrl = {
         httpOnly: true,
         path: "/user/refresh_token",
       });
-      return res.json({ accesstoken });
+      return res.json({ accesstoken , message:"User Register Successfully"});
     } catch (error) {
       return res
         .status(500)
@@ -72,7 +73,7 @@ const userCtrl = {
         httpOnly: true,
         path: "/user/refresh_token",
       });
-      return res.json({ accesstoken });
+      return res.json({ accesstoken, message: "user login successfully" });
     } catch (error) {
       return res
         .status(500)
@@ -87,11 +88,15 @@ const userCtrl = {
 
   getUser: async (req, res) => {
     try {
+      if (!req.user || !req.user.id) return res.status(400).json({ msg: "User Not Found" });
+  
       const user = await User.findById(req.user.id).select("-password");
-
       if (!user) return res.status(400).json({ msg: "User Not Found" });
+  
       res.json(user);
-    } catch (err) {
+    }
+    catch (err) {
+      console.error('Error fetching user:', err);  // Log the error for debugging
       return res.status(500).json({ msg: err.message });
     }
   },
@@ -104,6 +109,12 @@ const userCtrl = {
       const hash = await bcrypt.hash(newpassword, 10);
       await User.findByIdAndUpdate(req.user._id, { password: hash });
       return res.status(200).json({ msg: "password is updated successfully" });
+      await sendEmail(
+          req.user.email,
+          "Reset Password",
+          `Your password has been reset. New Password: ${newpassword}`
+        );
+       
     } catch (error) {
       return res
         .status(400)

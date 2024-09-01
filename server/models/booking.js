@@ -8,7 +8,7 @@ const bookingSchema = mongoose.Schema({
     bookingDate: {
         type: Date,
         required: true
-    },
+    }, 
     bookingTime: {
         type: String,
         required: true

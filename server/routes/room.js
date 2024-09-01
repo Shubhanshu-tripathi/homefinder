@@ -1,11 +1,13 @@
 const express = require('express')
 const roomCtrl = require('../controller/roomCtrl')
+const authAdmin = require('../middleware/adminAuth')
 const router = express.Router()
 
-router.post("/create", roomCtrl.createRoom)
-router.put("/update/:id", roomCtrl.updateRoom)
-router.delete("/delete/:id", roomCtrl.deleteRoom)
-router.get("/info/:id", roomCtrl.getRoom)
+router.post("/create",authAdmin, roomCtrl.createRoom)
+router.put("/update/:id", authAdmin, roomCtrl.updateRoom)
+router.delete("/delete/:id",authAdmin, roomCtrl.deleteRoom)
+router.get("/infoRoom/:id", authAdmin, roomCtrl.getRoom)
+router.get('/owner/:ownerId', roomCtrl.getRoomsByOwner);
 
 
 module.exports = router

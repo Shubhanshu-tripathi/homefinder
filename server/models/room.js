@@ -10,10 +10,10 @@ const roomSchema = mongoose.Schema({
         required: true
     },
     amenities: [String],
-    available: {
-        type: Boolean,
-        default: true
-    }
+    // available: {
+    //     type: Boolean,
+    //     default: true
+    // } 
 });
 
 const Room = mongoose.model('Room', roomSchema);

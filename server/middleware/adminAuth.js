@@ -3,13 +3,11 @@ require('dotenv').config();
 
 const authAdmin = (req, res, next) => {
     try {
-        const token = req.header("Authorization");
+        const token = req.header("Authorization").split(" ")[1];
         if (!token) return res.status(401).json({ msg: "Access denied, token missing" });
 
         jwt.verify(token, process.env.ACCESS_TOKEN, (err, user) => {
             if (err) return res.status(403).json({ msg: "Token verification failed" });
-
-            
 
             req.user = user;
             if (user.role !== 'admin') {

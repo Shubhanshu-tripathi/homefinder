@@ -1,11 +1,24 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
-import { BrowserRouter as Router, Route, Routes, BrowserRouter } from "react-router-dom";
-import Register from "./Components/Register";
-import Login from "./Components/Login";
-import Dashboard from "./Components/Dashboard";
-import RoomForm from "./Components/RoomForm";
+// src/App.jsx
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import Register from './Pages/Register';
+import Login from './Pages/Login';
+import ConfigContextProvider from './Context/ConfigContext';
+import Owner from './Pages/Owner';
+import OwnerProfile from './Pages/OwnerProfile';
 
-f
+
+const App = () => {
+  return (
+    <>
+      <ConfigContextProvider>
+        <Register />
+         <Login /> 
+        <Owner />
+        <OwnerProfile/>
+       </ConfigContextProvider>
+    </>
+  );
+};
+
+export default App;
