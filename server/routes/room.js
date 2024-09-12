@@ -10,4 +10,4 @@ router.get("/infoRoom/:id", authAdmin, roomCtrl.getRoom)
 router.get('/owner/:ownerId', roomCtrl.getRoomsByOwner);
 
 
-module.exports = router
+module.exports = router     

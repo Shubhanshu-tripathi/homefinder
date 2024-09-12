@@ -63,7 +63,7 @@ const roomCtrl = {
               
       const room =  await Room.findById(req.params.id);
       if (!room) return res.status(404).json({ msg: "Room not found" });
-
+            res.json(room)
     } catch (error) {
          
       res.status(500).json({ msg: error.message });

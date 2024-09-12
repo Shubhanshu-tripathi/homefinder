@@ -1,6 +1,7 @@
 const Affidavit = require("../models/affidavit");
 const Book = require("../models/booking");
 const Room = require("../models/room");
+const User = require("../models/user");
 const sendEmail = require("../utils/nodemailer");
 const sendaffidavite = require("../utils/sendaffidavite");
 
@@ -10,6 +11,15 @@ const bookCtrl = {
       if (!req.user || !req.user.id) {
         return res.status(401).json({ msg: "User not authenticated" });
       }
+
+      console.log("User details: ", req.user);
+
+      const user = await User.findById(req.user.id);
+
+      if (!user) {
+        return res.status(404).json({ msg: "User not found" });
+      }
+
       const { roomId, bookingDate, bookingTime } = req.body;
 
       if (!roomId || !bookingDate || !bookingTime) {
@@ -46,11 +56,19 @@ const bookCtrl = {
 
       await newBookingRequest.save();
 
-      // Ensure owner's email is correctly passed
+      
       sendEmail(
         room.owner.email,
         "New Booking Request",
-        `You have a new booking request for your room on ${bookingDate} at ${bookingTime}.`
+        `You have a new booking request for your room on ${bookingDate} at ${bookingTime}.
+          User Details:-
+          Image: ${user.image}
+          Name: ${user.name}
+          Email: ${user.email}
+          Phone: ${user.phone}
+          `
+        
+         
       );
       console.log(room.owner.email);
       res.status(201).json(newBookingRequest);
@@ -139,9 +157,9 @@ const bookCtrl = {
       console.error("Error submitting affidavit:", error.message);
       res.status(500).json({ error: error.message });
     }
-  }
+  }, 
+   
   
-     
 };
 
 module.exports = bookCtrl;

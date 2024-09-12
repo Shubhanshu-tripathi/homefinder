@@ -5,12 +5,14 @@ const authAdmin = require('../middleware/adminAuth')
 // const authAdmin = require('../middleware/adminAuth')
 const router = express.Router()
 
-router.post("/bookrequest",auth, bookCtrl.createBookingRequest)   
+router.post("/bookrequest/:bookingId",auth, bookCtrl.createBookingRequest)   
 // auth
 router.put("/bookresponse/:bookingId",authAdmin, bookCtrl.createResponse);
 
 
-router.post("/submitform",bookCtrl.submitdataform)
+router.post("/submitform", bookCtrl.submitdataform)
+
+
 
 
 module.exports = router                      

@@ -6,10 +6,8 @@ const login = async ({ email, password }) => {
       password,
     });                                    
   return response.data;
-   
-   
+  
 };
-
 const register = async (body) => {
     
 const {data} = await axios.post( "http://localhost:5000/user/register",
