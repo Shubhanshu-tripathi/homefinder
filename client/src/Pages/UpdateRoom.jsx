@@ -10,11 +10,15 @@ const UpdateRoom = () => {
     location: "",
     price: "",
     amenities: [],
+    additionalInformation:"",
     image: null,
+
   });
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  
+      
   const [success, setSuccess] = useState(false);
 
 
@@ -48,6 +52,7 @@ const UpdateRoom = () => {
           location: res.data.location,
           price: res.data.price,
           amenities: res.data.amenities.join(", "),
+          additionalInformation: res.data.additionalInformation || "",
           image: res.data.image || null,
         })
            console.log(res);
@@ -86,7 +91,7 @@ const UpdateRoom = () => {
       }, 1500);
       
     } catch (error) {
-      setError("Failed to update room details");
+      setError(`Failed to update room details ${error.message}` );
       
      }
     
@@ -100,22 +105,19 @@ const UpdateRoom = () => {
   
     <form onSubmit={handleChange} action="">
     <input type="text" name="location" placeholder="loacation" value={room.location} onChange={handle} id="" />
-    <input type="number" name="price" placeholder="price" id="" value={room.price} onChange={handle} />
+      <input type="number" name="price" placeholder="price" id="" value={room.price} onChange={handle} />
+      <input
+          type="text"
+          name="addiotionalInformation" 
+          placeholder="Additional Information"
+          value={room.addiotionalInformation}
+          onChange={handle}
+        />
     <input type="text" name="amenities" placeholder="amenities" value={room.amenities} onChange={handle} id="" />
       <input type="file" name="image"  id="" onChange={handleImageChange} />
         <button type="submit" >Update Room</button>
     </form> 
-    
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+
   </>)
 
 

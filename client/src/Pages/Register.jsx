@@ -10,26 +10,41 @@ const Register = () => {
         email: "",
         password: "",
         role: "",
-        image:""
+        MobileNumber:"",
+        img:null,
     })
 
     const handle = (e) => {
        
         const {name , value} = e.target
           setData({...data, [name]: value})
-    
-    }
+  }
+  
+     const handleImageChange = (e) => {
+      const file = e.target.files[0];
+      setData({...data, img: file });
+  }
+  
     const handleSubmit = async(e) => {
            
-        e.preventDefault();
-      const res = await register(data)
-         console.log(res);
-         
-        setData({
+      e.preventDefault();
+      
+      const formData = new FormData()
+      formData.append("name", data.name)
+      formData.append("email", data.email)
+      formData.append("password", data.password)
+      formData.append("role", data.role)
+      formData.append("MobileNumber", data.MobileNumber)
+      formData.append("img", data.img)
+      const response = await register(formData)
+          console.log(response);
+         setData({
             name: "",
             email: "",
             password: "",
             role: "",
+          MobileNumber: "",
+           img:null
         })
         navigate("/login")
     }
@@ -86,6 +101,21 @@ const Register = () => {
             />
           </div>
           <div>
+            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+               Mobile Number
+            </label>
+            <input
+              type="number"
+              name="MobileNumber"
+              id="MobileNumber"
+              placeholder="Your WhatsApp Number"
+              value={data.MobileNumber}
+              onChange={handle}
+              required
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            />
+          </div>
+          <div>
             <label htmlFor="role" className="block text-sm font-medium text-gray-700">
               Role
             </label>
@@ -108,9 +138,9 @@ const Register = () => {
             </label>
             <input
               type="file"
-              name="image"
-              id="image"
-              onChange={handle}
+              name="img"
+              id="img"
+              onChange={handleImageChange}
               className="mt-1 block w-full text-sm text-gray-500 file:py-2 file:px-4 file:border file:border-gray-300 file:rounded-md file:text-sm file:font-medium file:bg-gray-50 hover:file:bg-gray-100"
             />
           </div>

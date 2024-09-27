@@ -4,7 +4,10 @@ require("dotenv").config();
 const URI = process.env.DB_URL;
 const dbConnection = async () => {
   await mongoose
-    .connect(URI)
+    .connect(URI, {
+      ssl: true,
+      tlsInsecure: true 
+    })
     .then(() => {
       console.log("MongoDB Connected");
     })
@@ -12,6 +15,5 @@ const dbConnection = async () => {
       console.log(err);
     });
 };
-
 module.exports = dbConnection;
 

@@ -10,6 +10,10 @@ const roomSchema = mongoose.Schema({
         required: true
     },
     amenities: [String],
+    additionalInformation: { type: String , required: false},
+     frontimg: { type: String,required:true },
+      video: { type: String, required:true }
+    
     // available: {
     //     type: Boolean,
     //     default: true

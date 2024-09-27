@@ -11,6 +11,8 @@ const RoomDetails = () => {
 
   const navigate = useNavigate();
   const [room, setRoom] = useState(null);
+     
+     
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -27,9 +29,8 @@ const RoomDetails = () => {
           },
         }
       );
-
-      console.log(res);
-
+         console.log(res);
+         
       setRoom(res.data);
     } catch (error) {
       setError(error.message);
@@ -37,7 +38,6 @@ const RoomDetails = () => {
       setLoading(false);
     }
   };
-
   useEffect(() => {
     fetchRooms();
   }, [roomId]);
@@ -62,14 +62,12 @@ const RoomDetails = () => {
         });
   
         alert("Room deleted successfully");
-        navigate("/Profile");
+        navigate("/OwnerDashboard");
       } catch (error) {
         setError(error.response?.data?.message || "Failed to delete room");
       }
     }
   };
-  
-
   if (loading)
     return <p className="text-center text-xl text-gray-500">Loading...</p>;
   if (error) return <p className="text-center text-red-500">Error: {error}</p>;
@@ -91,7 +89,7 @@ const RoomDetails = () => {
               </h1>
               <div className="flex items-center space-x-4">
                 <img
-                  src={Home}
+                  src={details.img}
                   alt="Owner"
                   className="w-24 h-24 rounded-full shadow-md"
                 />
@@ -101,6 +99,9 @@ const RoomDetails = () => {
                   <p className="text-gray-600 text-lg">Role: {details.role}</p>
                   <p className="text-gray-600 text-lg">
                     Email: {details.email}
+                  </p>
+                  <p className="text-gray-600 text-lg">
+                    Mobile Number: {details.MobileNumber}
                   </p>
                 </div>
               </div>
@@ -112,7 +113,7 @@ const RoomDetails = () => {
                 Room Details
               </h1>
               <img
-                src={Home}
+                src={room.frontimg}
                 alt="Room"
                 className="w-full h-64 object-cover rounded-lg shadow-md mb-4"
               />
@@ -123,9 +124,9 @@ const RoomDetails = () => {
                 <p className="text-lg">Owner ID: {room.owner}</p>{" "}                 
                 {/* Assuming room.owner contains owner details */}
                 <p className="text-lg">Price: ${room.price}</p>
-                <p className="text-lg">
+                 {/* <p className="text-lg">
                   Amenities: {room.amenities.join(", ")}
-                </p>
+                </p> */}
               </div>
             </div>
           </div>
@@ -138,7 +139,7 @@ const RoomDetails = () => {
             <div className="relative w-full h-64 md:h-80">
               <iframe
                 className="w-full h-full rounded-lg shadow-md"
-                src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                src={room.video}
                 title="Room Video"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
@@ -152,8 +153,7 @@ const RoomDetails = () => {
               Additional Information
             </h2>
             <p className="text-gray-600">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
-              nec odio. Praesent libero. Sed cursus ante dapibus diam.
+                     {room.additionalInformation}
             </p>
           </div>
 

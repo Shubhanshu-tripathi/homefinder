@@ -7,7 +7,12 @@ import { useNavigate } from "react-router-dom";
 
 const OwnerProfile = () => {
   const { details } = useContext(configContext);
+     console.log(details);
+     console.log("Details ID:", details._id);
+
   const [room, setRoom] = useState([]);
+  console.log(room);
+  
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
@@ -18,7 +23,7 @@ const OwnerProfile = () => {
       if (!token) throw new Error("Token is missing");
 
       const res = await axios.get(
-        `http://localhost:5000/room/owner/${details._id}`,
+         `http://localhost:5000/room/owner/${details._id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -26,16 +31,22 @@ const OwnerProfile = () => {
           timeout: 20000,
         }
       );
-      console.log(res);
+      
+           console.log(res);
+           
       setRoom(res.data);
     } catch (error) {
-      toast.error("Error fetching rooms: " + error.message);
-      console.log(error);
+      if (error.response) {
+        console.error("Error response:", error.response);
+        toast.error(`Error: ${error.response.status} - ${error.response.data.msg || "Failed to fetch rooms"}`);
+      } else {
+        console.error("Request failed:", error);
+        toast.error("Error fetching rooms: " + error.message);
+      }
     } finally {
       setLoading(false);
     }
   };
-
   useEffect(() => {
     if (details && details.role === "admin") {
       fetchRooms();
@@ -59,7 +70,7 @@ const OwnerProfile = () => {
   const handleCardClick = (roomId) => {
     navigate(`/room/${roomId}`);
   };
-
+    
   return (
     <>
       <div className="h-[100%]  w-[100%]">  
@@ -68,8 +79,8 @@ const OwnerProfile = () => {
             <div className="h-[50%] w-[10%] bg-black rounded-[50%] ">
               <img
                 className="h-[100%] w-[100%] rounded-[50%]"
-                src={Home}
-                alt="Owner"
+                src={details.img || Home}
+                alt="Owner" 
               />
             </div>
             <h1 className="font-semibold mt-6">
@@ -99,7 +110,7 @@ const OwnerProfile = () => {
               >
                 <img
                   className="w-full h-48 object-cover"
-                  src={room.imageUrl || Home}
+                  src={room.frontimg }
                   alt={room.location}
                 />
                 <div className="p-4">

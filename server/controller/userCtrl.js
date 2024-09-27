@@ -3,16 +3,32 @@ const bcrypt = require("bcrypt");
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const sendEmail = require("../utils/nodemailer");
+const uploadCloudinary = require("../utils/cloudinary");
+
  
 const userCtrl = {
   register: async (req, res) => {
     try {
-      const { name, email, password, role } = req.body;
+      const { name, email, password, role, MobileNumber } = req.body;
+       
       const user = await User.findOne({ email: email });
       if (user) {
         return res.status(400).json({ msg: "User already exists" });
       }
 
+      let imageUrl = null;
+      if (req?.file?.path) {
+          const response = await uploadCloudinary(req.file.path);
+          if (response && response.url) {
+              imageUrl = response.url; 
+          } else {
+              return res.status(500).json({ msg: "Image upload failed" });
+          }
+      } else {
+          return res.status(400).json({ msg: "No file uploaded" });
+      }
+
+    
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(password, salt);
 
@@ -21,6 +37,8 @@ const userCtrl = {
         email,
         password: hashedPassword,
         role,
+        MobileNumber,
+        img:imageUrl,
       });
 
       await newUser.save();
