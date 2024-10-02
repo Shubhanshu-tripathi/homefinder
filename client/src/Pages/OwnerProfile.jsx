@@ -115,7 +115,7 @@ const OwnerProfile = () => {
                 />
                 <div className="p-4">
                   <h3 className="font-bold text-xl mb-2">{room.location}</h3>
-                  <p className="text-gray-700">Price: ${room.price} / month</p>
+                  <p className="text-gray-700">Price: ₹{room.price} / month</p>
                   <p className="text-gray-700">
                     Amenities: {room.amenities.join(", ")}
                   </p>

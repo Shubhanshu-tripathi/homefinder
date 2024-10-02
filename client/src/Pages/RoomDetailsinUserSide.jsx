@@ -36,7 +36,7 @@ const RoomDetailsinUserSide = () => {
     } finally {
       setLoading(false);
     }
-  };
+  };    
   useEffect(() => {
     fetchRooms();
   }, [roomId]);
@@ -96,7 +96,7 @@ const RoomDetailsinUserSide = () => {
                 <p className="text-lg">Owner: {details.name}</p>{" "}
                 <p className="text-lg">Owner ID: {room.owner}</p>{" "}                 
               
-                <p className="text-lg">Price: ${room.price}</p>
+                <p className="text-lg">Price: ₹{room.price}</p>
                  {/* <p className="text-lg">
                   Amenities: {room.amenities.join(", ")}
                 </p> */}

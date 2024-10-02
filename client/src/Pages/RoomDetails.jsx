@@ -126,7 +126,7 @@ const RoomDetails = () => {
                 
                  
               
-                <p className="text-lg">Price: ${room.price}</p>
+                <p className="text-lg">Price:₹{room.price}</p>
                  {/* <p className="text-lg">
                   Amenities: {room.amenities.join(", ")}
                 </p> */}

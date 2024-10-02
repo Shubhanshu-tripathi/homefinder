@@ -124,7 +124,7 @@ const Roomseekers = () => {
                   <h2 className="text-xl font-bold">{room.title}</h2>
                   <p>{room.location}</p>
                   <p className="font-semibold text-lg text-blue-600">
-                    ${room.price}
+                  ₹{room.price}
                   </p>
                   <button
                     className="mt-4 px-6 py-2 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition-all duration-300"
