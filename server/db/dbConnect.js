@@ -6,7 +6,8 @@ const dbConnection = async () => {
   await mongoose
     .connect(URI, {
       ssl: true,
-      tlsInsecure: true 
+      tlsInsecure: true,
+      
     })
     .then(() => {
       console.log("MongoDB Connected");

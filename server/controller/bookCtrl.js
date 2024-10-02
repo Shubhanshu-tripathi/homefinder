@@ -56,19 +56,16 @@ const bookCtrl = {
 
       await newBookingRequest.save();
 
-      
       sendEmail(
         room.owner.email,
         "New Booking Request",
         `You have a new booking request for your room on ${bookingDate} at ${bookingTime}.
           User Details:-
-          Image: ${user.image}
+          Image: ${user.img}
           Name: ${user.name}
           Email: ${user.email}
-          Phone: ${user.phone}
+          Phone: ${user.MobileNumber}
           `
-        
-         
       );
       console.log(room.owner.email);
       res.status(201).json(newBookingRequest);
@@ -80,40 +77,35 @@ const bookCtrl = {
   createResponse: async (req, res) => {
     try {
       const { bookingId } = req.params;
-      const { status, responseMessage } = req.body;
+      const { status} = req.status;
 
       if (!status || !["accepted", "rejected"].includes(status)) {
         return res.status(400).json({ msg: "Invalid status" });
       }
-
       const booking = await Book.findById(bookingId).populate("user");
-
       if (!booking) {
         return res.status(404).json({ msg: "Booking not found" });
       }
 
       booking.status = status;
-      booking.responseMessage = responseMessage || "";
       await booking.save();
 
-      if (status === "accepted") {
-        await sendaffidavite(booking.user.email, {
-          bookingId: booking._id,
-          bookingDate: booking.bookingDate,
-          bookingTime: booking.bookingTime,
-        });
-      } else {
+      if (status === "accept") { 
+
+         const formLink = `http://your-app-url.com/affidavit-form?bookingId=${booking._id}&userId=${booking.user._id}`;
+        await sendEmail(
+            booking.user.email,
+           "Booking Accepted - Fill Out the Affidavit Form",
+          `Your booking request has been accepted. Please fill out the affidavit form by clicking the link below:\n\n${formLink}`
+          ) 
+      }
+      else {
         await sendEmail(
           booking.user.email,
           "Booking Request Status Update",
-          `Your booking request for the room on ${booking.bookingDate} at ${
-            booking.bookingTime
-          } has been ${status}. Admin's response: ${
-            responseMessage || "No message"
-          }.`
+          `Your booking request has been ${status}.`
         );
       }
-
       res
         .status(200)
         .json({ msg: "Booking response updated and user notified" });
@@ -122,7 +114,6 @@ const bookCtrl = {
       res.status(500).json({ msg: error.message });
     }
   },
-
 
  submitdataform: async (req, res) => {
     try {
@@ -145,7 +136,7 @@ const bookCtrl = {
         return res.status(404).json({ msg: "Booking not found" });
       }
   
-      await sendEmail(
+       await sendEmail(
         booking.owner.email,
         "New Affidavit Submission",
         `You have a new affidavit submission for your room booking on ${booking.bookingDate} at ${booking.bookingTime}.`

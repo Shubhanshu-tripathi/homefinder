@@ -19,8 +19,9 @@ const sendEmail = async (to, subject, text) => {
     const mailOptions = {
       from: process.env.SMTP_USER,
       to,
-      subject,
-      text,
+      subject: subject,
+      text: text
+       
     };
     const info = await transporter.sendMail(mailOptions);
     console.log('Email sent:', info.response);

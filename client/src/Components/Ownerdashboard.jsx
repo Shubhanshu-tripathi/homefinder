@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { configContext } from "../Context/ConfigContext";
 import "../Css/OwnerDash.css";
+import Footer from "../Pages/Footer";
 
 const OwnerDashboard = () => {
   const { details } = useContext(configContext);
@@ -35,10 +36,10 @@ const OwnerDashboard = () => {
               Profile
             </Link>
             <Link
-              to="/Notification"
+              to="/renter"
               className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
             >
-                Notification
+                Your Renter
             </Link>
             <Link  
                onClick={logout}
@@ -64,6 +65,9 @@ const OwnerDashboard = () => {
         </div>
       </div>
       <div className="h-screen w-full bg-slate-400"></div>
+      <div>
+            <Footer/>
+          </div>
     </div>
   );
 };

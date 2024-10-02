@@ -7,8 +7,9 @@ const router = express.Router()
 router.post("/create", authAdmin, upload.fields([{ name: 'frontimg', maxCount: 1 }, { name: 'video', maxCount: 1 }]), roomCtrl.createRoom)
 router.put("/update/:id", authAdmin,upload.fields([{ name: 'frontimg', maxCount: 1 }, { name: 'video', maxCount: 1 }]), roomCtrl.updateRoom)
 router.delete("/delete/:id",authAdmin, roomCtrl.deleteRoom)
-router.get("/infoRoom/:id", authAdmin, roomCtrl.getRoom)
-router.get('/owner/:ownerId', roomCtrl.getRoomsByOwner);
+router.get("/infoRoom/:id", roomCtrl.getRoom)
+router.get('/allRoom', roomCtrl.getAllRoom);
+router.get('/getRoomByOwner/:ownerId', roomCtrl.getRoomsByOwner)
 
 module.exports = router     
 

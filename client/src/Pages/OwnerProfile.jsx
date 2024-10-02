@@ -23,7 +23,7 @@ const OwnerProfile = () => {
       if (!token) throw new Error("Token is missing");
 
       const res = await axios.get(
-         `http://localhost:5000/room/owner/${details._id}`,
+         `http://localhost:5000/room/getRoomByOwner/${details._id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

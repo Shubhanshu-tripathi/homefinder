@@ -24,7 +24,7 @@ const RoomDetails = () => {
       const res = await axios.get(
         `http://localhost:5000/room/infoRoom/${roomId}`,
         {
-          headers: {
+          headers: {    
             Authorization: `Bearer ${token}`,
           },
         }
@@ -82,7 +82,7 @@ const RoomDetails = () => {
       <div className="bg-blue-50">
         <div className="max-w-5xl mx-auto p-6 bg-white shadow-lg rounded-lg">
           <div className="grid md:grid-cols-2 gap-8">
-            {/* Owner Details Section */}
+          
             <div>
               <h1 className="text-3xl font-semibold text-gray-800 mb-4">
                 Owner Details
@@ -121,8 +121,11 @@ const RoomDetails = () => {
                 <p className="text-lg">Location: {room.location}</p>
                 <p className="text-lg">Room ID: {room._id}</p>
                 <p className="text-lg">Owner: {details.name}</p>{" "}
-                <p className="text-lg">Owner ID: {room.owner}</p>{" "}                 
-                {/* Assuming room.owner contains owner details */}
+                <p className="text-lg">Owner ID: {room.owner}</p>{" "} 
+               
+                
+                 
+              
                 <p className="text-lg">Price: ${room.price}</p>
                  {/* <p className="text-lg">
                   Amenities: {room.amenities.join(", ")}

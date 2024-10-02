@@ -144,22 +144,35 @@ const roomCtrl = {
 
   getRoom: async (req, res) => {
     try {
-      const roomId = req.params.id;
-      const room = await Room.findById(roomId);
-
-      if (!room) return res.status(404).json({ msg: "Room not found" });
-
+            const roomId = req.params.id;
+      const room = await Room.findById(roomId);;
+      if (room.length === 0) {
+        return res.status(404).json({ msg: "No rooms found" });
+      }
       res.json(room);
     } catch (error) {
       console.error(`Error fetching room with ID ${req.params.id}:`, error);
       res.status(500).json({ msg: error.message });
-    }
-  },
+    }       
+  },  
 
-  getRoomsByOwner: async (req, res) => {
+   getRoomsByOwner: async (req, res) => {
     const ownerId = req.params.ownerId;
     try {
       const rooms = await Room.find({ owner: ownerId });
+      if (rooms.length === 0) {
+        return res.status(404).json({ msg: "No rooms found for this owner" });
+      }
+      res.json(rooms);
+    } catch (error) {
+      res.status(500).json({ msg: error.message });
+    }
+  },    
+
+  getAllRoom: async (req, res) => {
+    // const ownerId = req.params.ownerId;
+    try {
+      const rooms = await Room.find();
       if (rooms.length === 0) {
         return res.status(404).json({ msg: "No rooms found for this owner" });
       }
