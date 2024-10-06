@@ -3,7 +3,7 @@ const Book = require("../models/booking");
 const Room = require("../models/room");
 const User = require("../models/user");
 const sendEmail = require("../utils/nodemailer");
-const sendaffidavite = require("../utils/sendaffidavite");
+
 
 const bookCtrl = {
   createBookingRequest: async (req, res) => {
@@ -11,7 +11,7 @@ const bookCtrl = {
       if (!req.user || !req.user.id) {
         return res.status(401).json({ msg: "User not authenticated" });
       }
-
+      
       console.log("User details: ", req.user);
 
       const user = await User.findById(req.user.id);
@@ -19,8 +19,8 @@ const bookCtrl = {
       if (!user) {
         return res.status(404).json({ msg: "User not found" });
       }
-
-      const { roomId, bookingDate, bookingTime } = req.body;
+      const roomId = req.params.roomId;
+      const { bookingDate, bookingTime } = req.body;
 
       if (!roomId || !bookingDate || !bookingTime) {
         return res.status(400).json({ msg: "All fields are required" });
@@ -77,7 +77,7 @@ const bookCtrl = {
   createResponse: async (req, res) => {
     try {
       const { bookingId } = req.params;
-      const { status} = req.status;
+      const { status} = req.body;
 
       if (!status || !["accepted", "rejected"].includes(status)) {
         return res.status(400).json({ msg: "Invalid status" });
@@ -149,8 +149,6 @@ const bookCtrl = {
       res.status(500).json({ error: error.message });
     }
   }, 
-   
-  
 };
 
 module.exports = bookCtrl;

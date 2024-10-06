@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Footer from "../Pages/Footer";
 import { useNavigate } from "react-router-dom";
+import EnhancedQuoteSection from "../Pages/EnhancedQuoteSection";
+import InfoBanner from "../Pages/InfoBanner";
 
 const Roomseekers = () => {
   const [room, SetRoom] = useState([]);
@@ -141,6 +143,13 @@ const Roomseekers = () => {
             )}
           </div>
         </div>
+       
+        <div className=" mt-20" >
+             <EnhancedQuoteSection/>
+        </div>
+        <div className=" mt-20">
+              <InfoBanner/>
+          </div>
         <div>
                 <Footer/>
               </div>
