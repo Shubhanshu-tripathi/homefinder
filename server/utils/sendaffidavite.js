@@ -1,7 +1,7 @@
 const sendEmail = require("./nodemailer")
 
 const sendaffidavite = async(userEmail,bookingDetails) => {
-    const formLink = `http://example.com/affidavit-form?bookingId=${bookingDetails.bookingId}`;
+    const formLink = `http://localhost:5173/affidavit-form?bookingId=${bookingId}`;
     
 
     await sendEmail(

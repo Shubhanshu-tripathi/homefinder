@@ -97,7 +97,7 @@ const RoomDetailsinUserSide = () => {
                   className="w-24 h-24 rounded-full shadow-md"
                 />
                 <div>
-                  <p className="text-gray-600 text-lg">Name: {details.name}</p>{" "}
+                  <p className="text-gray-600 text-lg">Name:{details.name}</p>{" "}
                   {/* Ensure details contain correct data */}
                   <p className="text-gray-600 text-lg">Role: {details.role}</p>
                   <p className="text-gray-600 text-lg">

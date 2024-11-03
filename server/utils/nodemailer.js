@@ -10,7 +10,7 @@ const transporter = nodemailer.createTransport({
     pass: process.env.SMTP_PASS,
   },
 });
-const sendEmail = async (to, subject, text) => {
+const sendEmail = async (to, subject, html) => {
   try {
     if (!to) {
       throw new Error("No recipients defined");
@@ -20,15 +20,16 @@ const sendEmail = async (to, subject, text) => {
       from: process.env.SMTP_USER,
       to,
       subject: subject,
-      text: text
-       
+      html: html 
     };
+
     const info = await transporter.sendMail(mailOptions);
     console.log('Email sent:', info.response);
   } catch (error) {
     console.error('Error sending email:', error.message);
   }
 };
+
 
 
 module.exports = sendEmail;

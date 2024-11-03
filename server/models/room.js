@@ -12,12 +12,11 @@ const roomSchema = mongoose.Schema({
     amenities: [String],
     additionalInformation: { type: String , required: false},
      frontimg: { type: String,required:true },
-      video: { type: String, required:true }
-    
-    // available: {
-    //     type: Boolean,
-    //     default: true
-    // } 
+      video: { type: String,  required: [true, 'Video URL is required']},
+    available: {
+        type: Boolean,
+        default: true
+    }   
 });
 
 const Room = mongoose.model('Room', roomSchema);
